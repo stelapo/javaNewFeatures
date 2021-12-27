@@ -1,5 +1,7 @@
 package test;
 
+import test.util.Print;
+
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.nio.file.Paths;
@@ -14,36 +16,12 @@ import java.util.stream.Collectors;
 public class Java9 {
 
 
-    private static void p(BaseStream baseStream, String title, boolean isChar) {
-        p("\n" + title + ":");
-        baseStream.iterator().forEachRemaining(i -> System.out.println(!isChar ? i : (char) ((Integer) i).intValue()));
-    }
-
-    private static void p(BaseStream baseStream, String title) {
-        p(baseStream, title, false);
-    }
-
-    private static void p(String s) {
-        System.out.println("-" + s + "-");
-    }
-
-    private static void p(ProcessHandle.Info i) {
-        String formattedString = ("\nCMD: " + i.command().get()).indent(1);
-        p(1 + formattedString);
-
-        formattedString = formattedString
-                .concat(("CMD LINE: " + i.commandLine().orElse("")).indent(3));
-        p(3 + formattedString);
-
-        formattedString = formattedString.concat(("Arguments=" + Arrays.stream(i.arguments().orElse(new String[0])).collect(Collectors.joining("-"))).indent(5));
-        p(5 + formattedString);
-
-        formattedString = formattedString.concat(("USER: " + i.user().orElse("")).indent(7));
-        p(7 + formattedString);
-    }
 
 
     public static void main(String[] args) throws IOException {
+
+        /* ====== Process API ====== */
+
         /*ProcessBuilder ls = new ProcessBuilder()
                 .command("ls")
                 .directory(Paths.get("/tmp")
@@ -51,8 +29,7 @@ public class Java9 {
         ProcessBuilder wc = new ProcessBuilder()
                 .command("wc", "-l")
                 .redirectOutput(ProcessBuilder.Redirect.INHERIT);
-        List<Process> dirPipeù = ProcessBuilder.startPipeline(Arrays.asList(ls, wc));*/
-
+        List<Process> dirPipe = ProcessBuilder.startPipeline(Arrays.asList(ls, wc));*/
 
         ProcessBuilder echo = new ProcessBuilder()
                 .command("CMD", "/C", "echo", "==== DIR cmd output ====");
@@ -62,26 +39,20 @@ public class Java9 {
                         .toFile()).redirectOutput(ProcessBuilder.Redirect.INHERIT);
         List<Process> echoPipeDir = ProcessBuilder.startPipeline(Arrays.asList(echo, dir));
 
-
+        //Filtro le varibili d'ambiente rispetto al nome della variabile (chiave) e stampo chiave --> valore
         ProcessBuilder processBuilder = new ProcessBuilder();
         Map<String, String> environment = processBuilder.environment();
         environment.keySet().stream()
-                .filter(s -> s.toUpperCase().contains("TNS") || s.toUpperCase().contains("ORA") || s.toUpperCase()
-                        .contains("INST"))
+                .filter(key -> key.toUpperCase().contains("TNS")
+                        || key.toUpperCase().contains("ORA")
+                        || key.toUpperCase().contains("INST"))
                 .sorted()
-                .peek(s -> p("==== ENV key=\"" + s + "\" ===="))
+                .peek(key -> Print.p("==== ENV key=\"" + key + "\" ===="))
                 .forEach(key -> System.out.printf("%s -> %s\n\n", key, environment.get(key)));
-
-
+        //Stampo le info dei due processi
         echoPipeDir.stream()
-                .peek(process -> p("==== INFO process - pid: " + process.pid() + " ===="))
-                .forEach(process -> p(process.info()));
+                .peek(process -> Print.p("==== INFO process - pid: " + process.pid() + " ===="))
+                .forEach(process -> Print.p(process.info()));
 
-
-
-        String multilineStr = "This is a multiline string.";
-
-        p("LINES:");
-        multilineStr.lines().forEach(s -> p(s.indent(1)));
     }
 }
