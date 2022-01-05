@@ -5,6 +5,7 @@ import test.util.Print;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
@@ -97,5 +98,13 @@ public class Java16 {
                 .map(n -> n[0]) // Stream<Integer>
                 .mapToInt(n -> n)
                 .sum());
+
+
+        Stream.generate(new Random()::nextInt) //stream infinito
+                .limit(5)
+                .forEach(Print::p);
+
+        new Random().doubles() //stream infinito
+                .forEach(Print::p);
     }
 }

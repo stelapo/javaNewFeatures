@@ -120,5 +120,17 @@ public class Java9 {
 
 
         Thread.sleep(2000);
+
+
+        //Arrays.mismatch
+        Print.p("\nArrays.mismatch example:");
+        int array1[] = { 15, 4, 22, 20, 45, 37, 18, 14, 12};
+        Print.p("Array1 from index 3 to 5 (excluse):");
+        Arrays.stream(Arrays.copyOfRange(array1, 3, 5)).forEach(Print::p);
+        int array2[] = { 7, 10, 11, 20, 45, 37, 18, 14, 12};
+        Print.p("Array2 from index 3 to 8 (excluse):");
+        Arrays.stream(Arrays.copyOfRange(array2, 3, 8)).forEach(Print::p);
+        int index = Arrays.mismatch(array1, 3, 5, array2, 3, 8 );
+        System.out.println("mismatched index for both sub-arrays is: "+index);
     }
 }
