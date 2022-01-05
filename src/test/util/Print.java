@@ -1,6 +1,7 @@
 package test.util;
 
 import java.util.Arrays;
+import java.util.Optional;
 import java.util.stream.BaseStream;
 import java.util.stream.Collectors;
 
@@ -17,6 +18,12 @@ public class Print {
     public static void p(String s) {
         System.out.println(s);
     }
+
+    public static void p(Optional<String> s) {
+        p(s.get());
+    }
+
+    public static void p(Object o) { p(o.toString()); }
 
     public static void p(ProcessHandle.Info i) {
         String formattedString = ("\nCMD: " + i.command().get()).indent(1);
