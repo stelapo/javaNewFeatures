@@ -3,21 +3,20 @@ package test;
 import test.util.Print;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Function;
-import java.util.stream.BaseStream;
-import java.util.stream.Collectors;
 
 public class Java9 {
+
+    public Java9(){
+        Print.p("Java9 created!");
+    }
 
     private static LocalDateTime currentLocalDateTime() {
         return LocalDateTime.now();
