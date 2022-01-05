@@ -5,7 +5,6 @@ import test.util.Print;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.LongStream;
@@ -22,7 +21,7 @@ public class Java16 {
         List<Optional<Double>> optionalList = of(Optional.of(1.1d), Optional.of(2.2d), Optional.empty(), Optional.of(3d));
         optionalList
                 .stream()
-                .forEach(System.out::println);
+                .forEach(Print::p);
 
         Print.p("\nESEMPIO1:");
 
@@ -83,9 +82,9 @@ public class Java16 {
                 })
                 .forEach(Print::p);
 
-        var a = 100;
+        /*var a = 100;
         var i = 101;
-        Print.p("(a=i) = " + (a = i));
+        Print.p("(a=i) = " + (a = i));*/
 
 
         Print.p("\nESEMPIO7 - iterate() - Fibonacci:");
