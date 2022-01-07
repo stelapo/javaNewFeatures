@@ -130,6 +130,10 @@ public class Java9 {
         Print.p("Array2 from index 3 to 8 (excluse):");
         Arrays.stream(Arrays.copyOfRange(array2, 3, 8)).forEach(Print::p);
         int index = Arrays.mismatch(array1, 3, 5, array2, 3, 8 );
-        System.out.println("mismatched index for both sub-arrays is: "+index);
+        Print.p("mismatched index for both sub-arrays is: "+index);
+
+
+        //var _ = "ciao"; //as of release 9, '_' is a keyword, and may not be used as an identifier
+        //Print.p(_);
     }
 }
